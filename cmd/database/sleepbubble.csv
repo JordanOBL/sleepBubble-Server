@@ -1,0 +1,4 @@
+#This line below represents boolean value of sleeping state: 0 = awake 1 = sleeping
+0
+#Every line below is a Devices EAS Teoken for FCM Push notifications
+ExponentPushToken[Xup33OC9wuPRhLAkqtNwPs]
