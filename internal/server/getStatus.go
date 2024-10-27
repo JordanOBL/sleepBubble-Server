@@ -11,33 +11,34 @@ import (
 
 //Get "/" returns status of baby sleeping
 func (app *application) GetStatusHandler(writer http.ResponseWriter, r *http.Request) {
+	//Request is GET
+	if r.Method != "GET" {
+		http.Error(writer, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
-		if r.Method != "GET" {
-			http.Error(writer, "Method not allowed", http.StatusMethodNotAllowed)
-			return
-		}
-		contents, err := os.OpenFile("../database/sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
-		if err != nil {
-			fmt.Printf(" '/', Error reading File: %v\n", err)
-		}
-		defer contents.Close()
+	//Open database file or create new
+	contents, err := os.OpenFile("../database/sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
+	if err != nil {
+		fmt.Printf(" '/', Error reading File: %v\n", err)
+	}
+	defer contents.Close()
 
-		csvReader := csv.NewReader(contents)
+	//Read DB into csv
+	csvReader := csv.NewReader(contents)
+	csvReader.Comment = '#'
+	csvReader.FieldsPerRecord = 1
 
-		csvReader.Comment = '#'
-		csvReader.FieldsPerRecord = 1
+	//Read 1st line only; gets current sleepStatus
+	sleepStatus, err := csvReader.Read()
+	if err != nil {
+		http.Error(writer, "Error reading db csv", http.StatusInternalServerError)
+	}
 
-		sleepStatus, err := csvReader.Read()
-		if err != nil {
-			http.Error(writer, "Error reading db csv", http.StatusInternalServerError)
-		}
-
-		if sleepStatus[0] != "0" && sleepStatus[0] != "1" {
-			writer.WriteHeader(http.StatusInternalServerError)
-			io.WriteString(writer, "invalid database value for sleep status")
-		}
-
-			// Decide whether Lennox is awake or asleep (you could use request data for this)
+	if sleepStatus[0] != "0" && sleepStatus[0] != "1" {
+		writer.WriteHeader(http.StatusInternalServerError)
+		io.WriteString(writer, "invalid database value for sleep status")
+	}
 
 	// Prepare response data
 	response := Response{
