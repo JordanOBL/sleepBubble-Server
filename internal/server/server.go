@@ -1,6 +1,7 @@
 package server
 
 import (
+	"cmp"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -34,7 +35,8 @@ func NewServer() (*http.Server, *application , *slog.Logger){
 	var cfg config
 
 	// Try to read environment variable for port (given by railway). Otherwise use default
-	port := os.Getenv("PORT")
+	// Use `PORT` provided in environment or default to 3000
+  	port := cmp.Or(os.Getenv("PORT"), "3000")
 	intPort, err := strconv.Atoi(port)
 	if err != nil {
 		intPort = 3000
@@ -55,7 +57,7 @@ func NewServer() (*http.Server, *application , *slog.Logger){
 
 	// create the server
 	srv := &http.Server{
-			Addr: fmt.Sprintf("0.0.0.0:%d", cfg.port),
+			Addr: fmt.Sprintf(":%d", cfg.port),
 			Handler:      app.routes(),
 			IdleTimeout:  45 * time.Second,
 			ReadTimeout:  5 * time.Second,
@@ -63,7 +65,7 @@ func NewServer() (*http.Server, *application , *slog.Logger){
 			ErrorLog:     slog.NewLogLogger(logger.Handler(), slog.LevelError),
 	}
 
-
+	logger.Info("Using port:", "port", cfg.port)
 
 	logger.Info("server started", "addr", srv.Addr)
 	return srv, app, logger
