@@ -11,7 +11,7 @@ func main() {
     server, app, logger := server.NewServer()
 
     // Load DB of connected Expo tokens into the server's client list
-    err := app.LoadSubscribedTokens("sleepbubble.csv")
+    err := app.LoadSubscribedTokens("/app/cmd/server/sleepbubble.csv")
     if err != nil {
         logger.Error("error loading subscribed tokens", "err", err.Error())
     }

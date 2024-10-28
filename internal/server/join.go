@@ -78,7 +78,7 @@ func (app *application) JoinServerHandler(writer http.ResponseWriter, r *http.Re
 		recordToWrite := []string{token}
 
 		// Open CSV file with append and write permissions
-		dbFile, err := os.OpenFile("sleepbubble.csv", os.O_APPEND|os.O_WRONLY, 0777)
+		dbFile, err := os.OpenFile("/app/cmd/server/sleepbubble.csv", os.O_APPEND|os.O_WRONLY, 0777)
 		if err != nil {
 			http.Error(writer, "Error opening file", http.StatusInternalServerError)
 			return
