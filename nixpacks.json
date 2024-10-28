@@ -1,0 +1,10 @@
+{
+  "phases": {
+    "build": {
+      "cmd": "go build -o out cmd/server/main.go"
+    },
+    "start": {
+      "cmd": "./out"
+    }
+  }
+}
