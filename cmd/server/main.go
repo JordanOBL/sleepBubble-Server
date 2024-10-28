@@ -13,7 +13,7 @@ func main() {
 
 	//Load Db of connected ExpotTokens 
 	//into servers Client List
-	err := app.LoadSubscribedTokens("../database/sleepbubble.csv")
+	err := app.LoadSubscribedTokens("sleepbubble.csv")
 	if err != nil {
 		fmt.Printf("error loading subscribed Tokens: %v", err)
 	}

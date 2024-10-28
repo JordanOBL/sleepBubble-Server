@@ -26,7 +26,7 @@ func (app *application) UpdateSleepStatus(writer http.ResponseWriter, r *http.Re
 		incomingSleepStatus := strings.TrimSpace(string(bodyBytes))
 
 		//Get current sleeping Status
-		contents, err := os.OpenFile("../database/sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
+		contents, err := os.OpenFile("sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
 		if err != nil {
 			fmt.Printf(" '/', Error reading File: %v\n", err)
 		}
@@ -115,7 +115,7 @@ func (app *application) UpdateSleepStatus(writer http.ResponseWriter, r *http.Re
 	tokenHeader := []string{"#Every line below is a Devices EAS Teoken for FCM Push notifications"}
 
 	// Step 4: Re-open the file for writing (this will overwrite the file)
-	file, err := os.Create("../database/sleepbubble.csv")
+	file, err := os.Create("sleepbubble.csv")
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return
