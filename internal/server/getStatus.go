@@ -19,7 +19,7 @@ func (app *application) GetStatusHandler(writer http.ResponseWriter, r *http.Req
 
 	//Open database file or create new
 	fmt.Println("Creating and opeinfing csv file")
-	contents, err := os.OpenFile("sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
+	contents, err := os.OpenFile("/app/cmd/server/sleepbubble.csv", os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Printf(" '/', Error reading File: %v\n", err)
 	}
