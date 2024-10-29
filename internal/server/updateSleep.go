@@ -39,16 +39,13 @@ func (app *application) UpdateSleepStatus(writer http.ResponseWriter, r *http.Re
 
 		prevSleepStatus, err := csvReader.Read()
 		
-if err != nil {
-    http.Error(writer, "Error reading db csv", http.StatusInternalServerError)
-    return
-}
-if len(prevSleepStatus) == 0 {
-    http.Error(writer, "CSV file contains no sleep status", http.StatusInternalServerError)
-    return
-}
 		if err != nil {
 			http.Error(writer, "Error reading db csv", http.StatusInternalServerError)
+			return
+		}
+		if len(prevSleepStatus) == 0 {
+			http.Error(writer, "CSV file contains no sleep status", http.StatusInternalServerError)
+			return
 		}
 
 		if incomingSleepStatus == prevSleepStatus[0] {
