@@ -31,11 +31,12 @@ func (app *application) GetStatusHandler(writer http.ResponseWriter, r *http.Req
 	csvReader.FieldsPerRecord = 1
 
 	//Read 1st line only; gets current sleepStatus
+	fmt.Printf("Reading csv content")
 	sleepStatus, err := csvReader.Read()
 	if err != nil {
 		http.Error(writer, "Error reading db csv", http.StatusInternalServerError)
 	}
-
+	fmt.Printf("Current sleepStatus: %v\n", sleepStatus)
 	if sleepStatus[0] != "0" && sleepStatus[0] != "1" {
 		writer.WriteHeader(http.StatusInternalServerError)
 		io.WriteString(writer, "invalid database value for sleep status")
