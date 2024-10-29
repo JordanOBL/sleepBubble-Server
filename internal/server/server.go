@@ -57,7 +57,7 @@ func NewServer() (*http.Server, *application , *slog.Logger){
 
 	// create the server
 	srv := &http.Server{
-			Addr: fmt.Sprintf(":%d", cfg.port),
+			Addr: fmt.Sprintf("0.0.0.0:%d", cfg.port),
 			Handler:      app.routes(),
 			IdleTimeout:  45 * time.Second,
 			ReadTimeout:  5 * time.Second,
