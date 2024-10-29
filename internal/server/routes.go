@@ -16,7 +16,7 @@ func (app *application) routes() *httprouter.Router {
 	router.HandlerFunc(http.MethodPost,"/join", app.JoinServerHandler )
 
 	//Update sleep status of the baby
-	router.HandlerFunc(http.MethodPost,"/updateSleep", app.UpdateSleepStatus)
+	router.HandlerFunc(http.MethodPost,"/updatesleep", app.UpdateSleepStatus)
 
 	// Define the available routes
 	router.HandlerFunc(http.MethodGet, "/v1/healthcheck", app.healthcheckHandler)
